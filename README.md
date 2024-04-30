@@ -35,3 +35,4 @@ pip install 'pillow<7'
 
 ## Yolo notes
 - img size in train and detect: https://github.com/ultralytics/yolov5/issues/5851
+- model with gab_dataset: https://files.clear.ml/YOLOv5/Training.a03a00ae52cd4acda82e26668bb96510/models/best.pt
