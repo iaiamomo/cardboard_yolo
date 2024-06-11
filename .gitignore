@@ -1,6 +1,8 @@
 dataset
-data_*
+data*
 yolov5
+yolov10
+nohup.out
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
