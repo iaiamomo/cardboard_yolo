@@ -1,0 +1,7 @@
+python-dotenv
+utils
+jupyter
+clearml
+huggingface_hub
+supervision
+roboflow

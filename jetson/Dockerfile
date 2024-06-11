@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM nvcr.io/nvidia/l4t-jetpack:r35.3.1
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV LC_ALL C.UTF-8
@@ -49,24 +49,26 @@ ENV LD_LIBRARY_PATH=/usr/local/lib
 WORKDIR /home/default
 
 # install requirements
-RUN pip install python-dotenv utils jupyter clearml
+RUN pip install python-dotenv utils jupyter libjpeg libpng clearml
 
 # clone yolov5 and install requirements
-RUN git clone https://github.com/ultralytics/yolov5.git &&\
+RUN git clone https://github.com/ultralytics/yolov5 &&\
     cd yolov5 &&\
     pip install -qr requirements.txt &&\
     git config --global --add safe.directory /home/default/yolov5
+    pip uninstall torch torchvision
 
-RUN git clone https://github.com/THU-MIG/yolov10.git &&\
-    cd yolov10 &&\
-    pip install . &&\
-    git config --global --add safe.directory /home/default/yolov10 &&\
-    mkdir /home/default/yolov10/weights &&\
-    !wget -P /home/default/yolov10/weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10n.pt &&\
-    !wget -P /home/default/yolov10/weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10s.pt &&\
-    !wget -P /home/default/yolov10/weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10m.pt &&\
-    !wget -P /home/default/yolov10/weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10b.pt &&\
-    !wget -P /home/default/yolov10/weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10x.pt &&\
-    !wget -P /home/default/yolov10/weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10l.pt
+# install torch for jetson
+RUN export TORCH_INSTALL=https://developer.download.nvidia.cn/compute/redist/jp/v511/pytorch/torch-2.0.0+nv23.05-cp38-cp38-linux_aarch64.whl &&\
+    pip install --upgrade pip &&\
+    pip install --no-cache $TORCH_INSTALL
+
+# install torchvision for jetson
+RUN git clone --branch v0.15.1 https://github.com/pytorch/vision torchvision &&\
+    cd torchvision &&\
+    export BUILD_VERSION=0.15.1 &&\
+    python3 setup.py install --user &&\
+    cd ../ &&\
+    pip install 'pillow<7'
 
 WORKDIR /home/default

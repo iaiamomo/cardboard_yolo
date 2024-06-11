@@ -1,0 +1,6 @@
+python-dotenv
+utils
+jupyter
+libjpeg
+libpng
+clearml

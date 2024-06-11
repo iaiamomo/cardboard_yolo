@@ -46,6 +46,27 @@ pip install 'pillow<7'
 - Version: JetPack 5.1 (L4T R35.2.1) / JetPack 5.1.1 (L4T R35.3.1) - Python 3.8 - torch-2.0.0+nv23.05-cp38-cp38-linux_aarch64.whl 5.0k
 - PyTorch v2.0 - torchvision v0.15.1
 
+## Yolov5
+```bash
+git clone https://github.com/ultralytics/yolov5.git
+cd yolov5
+pip install -qr requirements.txt
+```
+
+## Yolov10
+```bash
+git clone https://github.com/THU-MIG/yolov10.git
+cd yolov10
+pip install .
+mkdir -p weights
+wget -P weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10n.pt
+wget -P weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10s.pt
+wget -P weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10m.pt
+wget -P weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10b.pt
+wget -P weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10x.pt
+wget -P weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10l.pt
+```
+
 ## Yolo notes
 - img size in train and detect: https://github.com/ultralytics/yolov5/issues/5851
 - model with gab_dataset: https://files.clear.ml/YOLOv5/Training.a03a00ae52cd4acda82e26668bb96510/models/best.pt
@@ -55,3 +76,6 @@ pip install 'pillow<7'
 - exp13 -> dataset: data_640_augmented, 640 augmentation -> exp5
 - exp15 -> dataset: data_black, 640 augmentation + black boxes -> exp9
 - exp20 -> dataset: data_holes, 640 augmentation + black boxes + hole class -> exp11
+
+## Experiments - Aurora R14
+- exp2 -> dataset: data_fold_negative, dim 640 with negative example
