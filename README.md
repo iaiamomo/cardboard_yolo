@@ -54,4 +54,4 @@ pip install 'pillow<7'
 ## Experiments - Aurora R16
 - exp13 -> dataset: data_640_augmented, 640 augmentation -> exp5
 - exp15 -> dataset: data_black, 640 augmentation + black boxes -> exp9
-- exp19? -> dataset: data_holes, 640 augmentation + black boxes + hole class
+- exp20 -> dataset: data_holes, 640 augmentation + black boxes + hole class -> exp11
