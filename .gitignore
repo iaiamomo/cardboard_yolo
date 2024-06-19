@@ -2,6 +2,8 @@ dataset
 data*
 yolov5
 yolov8
+sam
+peryolo
 nohup.out
 
 # Byte-compiled / optimized / DLL files
