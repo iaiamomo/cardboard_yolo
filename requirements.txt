@@ -5,3 +5,5 @@ clearml
 huggingface_hub
 supervision
 roboflow
+ultralytics
+pickleshare

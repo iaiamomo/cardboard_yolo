@@ -1,5 +1,19 @@
 # Cardboard defects
 
+## Getting Started
+- Install [Miniconda](https://docs.anaconda.com/free/miniconda/) or [Anaconda](https://www.anaconda.com/download) if you haven't already.
+
+- Create a new [conda](https://docs.anaconda.com/free/miniconda/) environment:
+    ```bash
+    conda create -n pyolo python=3.10
+    conda activate pyolo
+    ```
+
+- Install the dependencies:
+    ```bash
+    pip install -r requirements.py
+    ```
+
 ## Docker
 
 1. Build the image
@@ -53,18 +67,10 @@ cd yolov5
 pip install -qr requirements.txt
 ```
 
-## Yolov10
+## Yolov8
 ```bash
-git clone https://github.com/THU-MIG/yolov10.git
-cd yolov10
-pip install .
-mkdir -p weights
-wget -P weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10n.pt
-wget -P weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10s.pt
-wget -P weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10m.pt
-wget -P weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10b.pt
-wget -P weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10x.pt
-wget -P weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10l.pt
+from ultralytics import YOLO
+model = YOLO('yolov8m.pt')
 ```
 
 ## Yolo notes
@@ -72,10 +78,44 @@ wget -P weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yol
 - model with gab_dataset: https://files.clear.ml/YOLOv5/Training.a03a00ae52cd4acda82e26668bb96510/models/best.pt
 
 
-## Experiments - Aurora R16
-- exp13 -> dataset: data_640_augmented, 640 augmentation -> exp5
-- exp15 -> dataset: data_black, 640 augmentation + black boxes -> exp9
-- exp20 -> dataset: data_holes, 640 augmentation + black boxes + hole class -> exp11
+## Experiments
 
-## Experiments - Aurora R14
-- exp2 -> dataset: data_fold_negative, dim 640 with negative example
+### Folds (dataset_f)
+Dataset with:
+- Negative examples
+- Preprocessing: resize 640 and auto-orient
+- Augmentation: rotation 90
+
+#### Models
+- YOLOv5 (epoch 400, patience 50)
+    - s: (batch 64)
+        - yolov5/runs/train/exp4
+        - yolov5/runs/detect/exp5
+    - m: (batch 32) 
+        - yolov5/runs/train/exp6 non ha early stoppato
+        - yolov5/runs/detect/exp6
+- YOLOv8 (batch 32, epoch 400, patience 50)
+    - s: yolov8/runs/detect/train12
+        - yolov8/runs/detect/predict3
+    - m: yolov8/runs/detect/train13
+        - yolov8/runs/detect/predict4
+
+### Holes (dataset_h)
+Dataset with:
+- Negative examples
+- Preprocessing: resize 640 and auto-orient
+- Augmentation: rotation 90
+
+#### Models
+- YOLOv5 (epoch 400, patience 50)
+    - s: (batch 64)
+        - yolov5/runs/train/exp7
+        - yolov5/runs/detect/exp7
+    - m: (batch 32) 
+        - yolov5/runs/train/exp9 non ha early stoppato
+        - yolov5/runs/detect/exp9
+- YOLOv8 (batch 32, epoch 400, patience 50)
+    - s: yolov8/runs/detect/train
+        - yolov8/runs/detect/predict2
+    - m: yolov8/runs/detect/train3 non ha early stoppato
+        - yolov8/runs/detect/predict3
