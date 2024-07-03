@@ -57,16 +57,4 @@ RUN git clone https://github.com/ultralytics/yolov5.git &&\
     pip install -qr requirements.txt &&\
     git config --global --add safe.directory /home/default/yolov5
 
-RUN git clone https://github.com/THU-MIG/yolov10.git &&\
-    cd yolov10 &&\
-    pip install . &&\
-    git config --global --add safe.directory /home/default/yolov10 &&\
-    mkdir /home/default/yolov10/weights &&\
-    !wget -P /home/default/yolov10/weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10n.pt &&\
-    !wget -P /home/default/yolov10/weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10s.pt &&\
-    !wget -P /home/default/yolov10/weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10m.pt &&\
-    !wget -P /home/default/yolov10/weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10b.pt &&\
-    !wget -P /home/default/yolov10/weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10x.pt &&\
-    !wget -P /home/default/yolov10/weights -q https://github.com/THU-MIG/yolov10/releases/download/v1.1/yolov10l.pt
-
 WORKDIR /home/default
