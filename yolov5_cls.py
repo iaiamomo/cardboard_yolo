@@ -15,7 +15,7 @@ batches = {
     'm': 32
 }
 models = list(batches.keys())
-datasets = ['classification/dataset_fold_cls', 'classification/dataset_hole_cls']
+datasets = ['classification/dataset_fold_cls']
 idx = 1
 for dataset in datasets:
     for dim in models:
