@@ -1,0 +1,2 @@
+YOLOv8 training
+dataset_all_cls - YOLOv8x - train5

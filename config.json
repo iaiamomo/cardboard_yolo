@@ -1,4 +1,6 @@
 {
-    "dim": "s",
-    "device": 1
+    "dim": "x",
+    "device": 0,
+    "train_id": 5,
+    "dataset": "dataset_hole_negative"
 }
