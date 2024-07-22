@@ -1,0 +1,3 @@
+        TP      TN      FP      FN      precision   recall
+fold    10495   4064    354     4988    0.96        0.67
+hole    3266    16508   45      82      0.98        0.97
