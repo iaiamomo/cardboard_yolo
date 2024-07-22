@@ -1,0 +1,6 @@
+Dataset,Model,Run,acc1,acc5
+dataset_all_cls,x,val,0.8439274430274963,1.0
+dataset_all_cls,l,val2,0.8536757230758667,1.0
+dataset_all_cls,m,val3,0.730616569519043,1.0
+dataset_all_cls,n,val4,0.9363348484039307,1.0
+dataset_all_cls,s,val5,0.9003065228462219,1.0
