@@ -1,13 +1,16 @@
-dataset
 data*
-yolov5
-yolov8
 sam
 peryolo
-nohup.out
 *.zip
 *.out
-test_images
+cardboard_test
+classification
+deteciton
+segmentation
+die-vis
+hole_fold
+jetson
+segmentation
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

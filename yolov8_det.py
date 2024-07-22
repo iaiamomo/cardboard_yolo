@@ -1,10 +1,7 @@
 import os
 from ultralytics import YOLO
 from clearml import Task
-import gc
-import torch
 import dotenv
-import time
 import json
 dotenv.load_dotenv()
 
@@ -23,9 +20,7 @@ batches = {
     'l': 32,
     'x': 32
 }
-#models = list(batches.keys())
-#datasets = ['dataset_fold' 'dataset_fold_negative', 'dataset_hole', 'dataset_hole_negative']
-#idx = 7
+datasets = ['dataset_all']
 for dataset in datasets:
     for dim in models:
         if idx == 1:
@@ -38,9 +33,4 @@ for dataset in datasets:
         model = YOLO(f'yolov8{dim}.pt')
         model.train(data=f"{cwd}/{dataset}/data.yaml", epochs=500, batch=batches[dim], imgsz=640, patience=30, optimizer='SGD', device=device_gpu)
         task.close()
-        #model = YOLO(f"{cwd}/yolov8/runs/detect/{run_res}/weights/best.pt")
-        #results = model.predict(f"{cwd}/{dataset}/test/images/", save=True, imgsz=640, conf=0.7)
-        
-        gc.collect()
-        torch.cuda.empty_cache()
-        time.sleep(60)
+ 
