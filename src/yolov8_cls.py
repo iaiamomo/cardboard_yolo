@@ -19,7 +19,7 @@ batches = {
     'l': 32,
     'x': 32
 }
-datasets = ['dataset_all_cls']
+datasets = ['dataset_cls']
 for dataset in datasets:
     for dim in models:
         if idx == 1:

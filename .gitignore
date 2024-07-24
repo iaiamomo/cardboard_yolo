@@ -1,16 +1,7 @@
 data*
-sam
-peryolo
 *.zip
 *.out
-cardboard_test
-classification
-deteciton
-segmentation
-die-vis
-hole_fold
-jetson
-segmentation
+history
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

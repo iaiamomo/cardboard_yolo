@@ -1,5 +1,8 @@
 # Cardboard defects
 
+## Experimental Results
+*Experimental results are available in [validation](validation) folder.*
+
 ## Getting Started
 - Install [Miniconda](https://docs.anaconda.com/free/miniconda/) or [Anaconda](https://www.anaconda.com/download) if you haven't already.
 
@@ -14,61 +17,69 @@
     pip install -r requirements.py
     ```
 
-## Docker
-
+## Getting Started
+0. Install [docker](https://www.docker.com/products/docker-desktop/)
 1. Build the image
     ```bash
     docker build -t rotalaser-gpu .
     ```
 2. Launch the container in detach mode with GPU acces. Be sure to have installed the [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html).
     ```bash
-    # Jetson
-    docker run -p 8888:8888 -d -v /home/iseng/cardboard_yolo:/home/default/ --runtime nvidia -it rotalaser-gpu bash
-
-    # Server
-    docker run -p 8888:8888 -d -v /home/iseng/cardboard_yolo:/home/default/ --gpus=all -it rotalaser-gpu bash
+    docker run -d -v .:/home/default/ --gpus=all -it rotalaser-gpu bash
     ```
 3. Open a terminal inside the created container (check the `<container_id>` with `docker ps`).
     ```bash
     docker exec -it <container_id> bash
     ```
-4. Launch Jupyter
+
+## Training
+*Training execution traces are available in [res](res) folder.*
+
+If you want to train the models, follow the steps below:
+
+0. Create an `.env` file containing the [ClearML](https://app.clear.ml) API keys.
+1. Download the dataset from [roboflow](https://universe.roboflow.com/cardspace/hole_fold).
+2. Extract the dataset into `dataset_det`
+2. Run the scripts to convert the detection dataset into classification and segmentation
     ```bash
-    jupyter notebook --ip 0.0.0.0 --port 8888 --allow-root
+    cd dataset
+    python3 det2cls.py
+    python3 det2seg.py
+    ```
+3. To train the models you need to set up the [configuration file](src/config.json):
+    ```json
+    {
+        "dim": "n",
+        "device": 0,
+        "train_id": 1
+    }
+    ```
+    where:
+
+    - "dim": represents the dimension of the model
+    - "devide": represents the GPU on which running the training
+    - "train_id": serves for tracing the log on ClearML, you can skip it
+4. Run the following script for each train
+    ```python
+    cd src
+    python3 yolov8_det.py   # YOLOv8 detection model
+    python3 yolov8_cls.py   # YOLOv8 classification model
+    python3 yolov8_seg.py   # YOLOv8 segmentation model
     ```
 
-### Jetson configuration
-These instructions are already applied in the creation of the container. They are here reported for information.
-
-#### Torch
-To install pytorch for jetson please follow this installation guide: https://forums.developer.nvidia.com/t/pytorch-for-jetson/72048
-
-#### Torchvision
-To install torchvision for jetson please follow this installation guide: https://forums.developer.nvidia.com/t/pytorch-for-jetson/72048 (Instructions > Installation > torchvision)
-
-```bash
-sudo apt-get install libjpeg-dev zlib1g-dev libpython3-dev libopenblas-dev libavcodec-dev libavformat-dev libswscale-dev
-git clone --branch v0.15.1 https://github.com/pytorch/vision torchvision
-cd torchvision
-export BUILD_VERSION=0.15.1
-python3 setup.py install --user
-cd ../
-pip install 'pillow<7'
-```
-
-#### Versions
-- Version: JetPack 5.1 (L4T R35.2.1) / JetPack 5.1.1 (L4T R35.3.1) - Python 3.8 - torch-2.0.0+nv23.05-cp38-cp38-linux_aarch64.whl 5.0k
-- PyTorch v2.0 - torchvision v0.15.1
-
-## Yolov5
-```bash
-git clone https://github.com/ultralytics/yolov5.git
-cd yolov5
-pip install -qr requirements.txt
-```
-
-## Yolov8
-```bash
-from ultralytics import YOLO
-model = YOLO('yolov8m.pt')
-```
+## Validation
+1. Download the validation dataset from [roboflow](https://universe.roboflow.com/cardspace/cardboard_testset_).
+2. Extract the dataset into `dataset_det_val`
+2. Run the scripts to convert the detection dataset into classification and segmentation
+    ```bash
+    cd dataset
+    python3 det2cls_val.py
+    python3 det2seg_val.py
+    ```
+3. Run the following script to validate the various models 
+    ```python
+    cd src
+    python3 yolov8_det_valid.py   # YOLOv8 detection model validation
+    python3 yolov8_cls_valid.py   # YOLOv8 classification model validation
+    python3 yolov8_seg_valid.py   # YOLOv8 segmentation model validation
+    ```

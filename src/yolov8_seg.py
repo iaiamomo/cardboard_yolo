@@ -20,7 +20,7 @@ batches = {
     'l': 32,
     'x': 32
 }
-datasets = ['data_segmentation']
+datasets = ['dataset_seg']
 for dataset in datasets:
     for dim in models:
         if idx == 1:
