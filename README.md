@@ -1,23 +1,40 @@
 # Cardboard defects
 
 ## Experimental Results
-*Experimental results are available in [validation](validation) folder.*
+Experimental results are available in [validation](validation) folder. A `class_pr.txt` file is present in each folder reporting the *precision*, *accuracy* and other metrics. The structure of the [validation](validation) folder is as follows.
+```
+.
+└── validation
+    ├── classify                # classification task
+    |   └── yolv8l-cls          # large model
+    |   |   ├── class_pr.txt    # results
+    |   |   └── ...
+    |   └── ...                 # other models (x, m, s, n)
+    ├── detect                  # detection task
+    |   └── yolv8l-det          # large model
+    |   |   ├── class_pr.txt    # results
+    |   |   └── ...
+    |   └── ...                 # other models (x, m, s, n)
+    └── segment                 # segmentation task
+        └── yolv8l-seg          # large model
+        |   ├── class_pr.txt    # results
+        |   └── ...
+        └── ...                 # other models (x, m, s, n)
+```
 
-## Getting Started
-- Install [Miniconda](https://docs.anaconda.com/free/miniconda/) or [Anaconda](https://www.anaconda.com/download) if you haven't already.
+## Training details
+Training execution traces are available in [res](res) folder. The structure of the [res](res) folder is as follows.
+```
+.
+└── res
+    ├── clearml_exp_cls.csv      # classification training details
+    ├── clearml_exp_det.csv      # detection training details
+    └── clearml_exp_seg.csv      # segmentation training details
+```
 
-- Create a new [conda](https://docs.anaconda.com/free/miniconda/) environment:
-    ```bash
-    conda create -n pyolo python=3.10
-    conda activate pyolo
-    ```
 
-- Install the dependencies:
-    ```bash
-    pip install -r requirements.py
-    ```
-
-## Getting Started
+## How to use the code
+### Getting Started
 0. Install [docker](https://www.docker.com/products/docker-desktop/)
 1. Build the image
     ```bash
@@ -32,9 +49,7 @@
     docker exec -it <container_id> bash
     ```
 
-## Training
-*Training execution traces are available in [res](res) folder.*
-
+### Training
 If you want to train the models, follow the steps below:
 
 0. Create an `.env` file containing the [ClearML](https://app.clear.ml) API keys.
@@ -58,10 +73,10 @@ If you want to train the models, follow the steps below:
 
     - "dim": represents the dimension of the model
     - "devide": represents the GPU on which running the training
-    - "train_id": serves for tracing the log on ClearML, you can skip it
+    - "train_id": serves for tracing the log on ClearML. Remember to use an incremental number starting from 1 for each YOLOv8 task. It will be useful for tracking the `best.pt` model stored in the `training` folder of `yolov8`.
 4. Run the following script for each train
     ```python
-    cd src
+    cd src/training
     python3 yolov8_det.py   # YOLOv8 detection model
     python3 yolov8_cls.py   # YOLOv8 classification model
     python3 yolov8_seg.py   # YOLOv8 segmentation model
@@ -70,16 +85,15 @@ If you want to train the models, follow the steps below:
 ## Validation
 1. Download the validation dataset from [roboflow](https://universe.roboflow.com/cardspace/cardboard_testset_).
 2. Extract the dataset into `dataset_det_val`
-2. Run the scripts to convert the detection dataset into classification and segmentation
-    ```bash
-    cd dataset
-    python3 det2cls_val.py
-    python3 det2seg_val.py
-    ```
-3. Run the following script to validate the various models 
+2. Use the scripts to convert the detection dataset into classification and segmentation
+4. Download the `clearml.csv` file from the tool to download the training info
+3. Run the following script to validate the various models
     ```python
-    cd src
+    cd src/validation
     python3 yolov8_det_valid.py   # YOLOv8 detection model validation
     python3 yolov8_cls_valid.py   # YOLOv8 classification model validation
     python3 yolov8_seg_valid.py   # YOLOv8 segmentation model validation
     ```
+
+## License
+Distributed under the MIT License. See [LICENSE](LICENSE) for more information.
