@@ -1,6 +1,7 @@
 # DIE-VIS: an Automated Visual Inspection System for Cardboard Box Manufacturing
 
-Repository containing the experimental results for the paper "DIE-VIS: an Automated Visual Inspection System for Cardboard Box Manufacturing" presented at the 2nd workshop on Vision-based InduStrial InspectiON (VISION) - ECCV 2024.
+Repository containing the experimental results for the paper "DIE-VIS: an Automated Visual Inspection System for Cardboard Box Manufacturing" presented at the 2nd workshop on Vision-based InduStrial InspectiON (VISION) - ECCV 2024.\
+[Link](https://www.diag.uniroma1.it/leotta/publications/VISION_ECCV2024.pdf) to the paper.
 
 ## Experimental Results
 Experimental results are available in [validation](validation) folder. A `class_pr.txt` file is present in each folder reporting the *precision*, *accuracy* and other metrics. The structure of the [validation](validation) folder is as follows.
