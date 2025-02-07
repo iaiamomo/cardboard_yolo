@@ -37,7 +37,7 @@ Training execution traces are available in [res](res) folder. The structure of t
 
 
 ## How to use the code
-### Getting Started
+### Getting Started with Docker
 0. Install [docker](https://www.docker.com/products/docker-desktop/)
 1. Build the image
     ```bash
@@ -55,6 +55,26 @@ Training execution traces are available in [res](res) folder. The structure of t
     ```
     pip install -r requirements.txt
     ```
+
+### Getting Started with Podman
+0. Install [podman](https://podman.io/docs/installation)
+1. Build the image
+    ```bash
+    podman build -f Dockerfile -t rotalaser-gpu
+    ```
+2. Launch the container in detach mode with GPU acces. Be sure to have installed the [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html).
+    ```bash
+    podman run -d -v .:/home/default/ --gpus=all -it rotalaser-gpu bash
+    ```
+3. Open a terminal inside the created container (check the `<container_id>` with `podman ps`).
+    ```bash
+    podman exec -it <container_id> bash
+    ```
+4. Install necessary Python packages
+    ```
+    pip install -r requirements.txt
+    ```
+
 
 ### Training
 If you want to train the models, follow the steps below:
