@@ -52,9 +52,9 @@ WORKDIR /home/default
 RUN pip install python-dotenv utils jupyter clearml
 
 # clone yolov5 and install requirements
-RUN git clone https://github.com/ultralytics/yolov5.git &&\
-    cd yolov5 &&\
-    pip install -qr requirements.txt &&\
-    git config --global --add safe.directory /home/default/yolov5
+#RUN git clone https://github.com/ultralytics/yolov5.git &&\
+#    cd yolov5 &&\
+#    pip install -qr requirements.txt &&\
+#    git config --global --add safe.directory /home/default/yolov5
 
 WORKDIR /home/default

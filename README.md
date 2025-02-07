@@ -48,20 +48,56 @@ Training execution traces are available in [res](res) folder. The structure of t
     ```bash
     docker exec -it <container_id> bash
     ```
+4. Install necessary Python packages
+    ```
+    pip install -r requirements.txt
+    ```
 
 ### Training
 If you want to train the models, follow the steps below:
 
-0. Create an `.env` file containing the [ClearML](https://app.clear.ml) API keys.
-1. Download the dataset from [roboflow](https://universe.roboflow.com/cardspace/hole_fold).
-2. Extract the dataset into `dataset_det`
-2. Run the scripts to convert the detection dataset into classification and segmentation
+0. Move into `src/training`.
     ```bash
-    cd dataset
-    python3 det2cls.py
-    python3 det2seg.py
+    cd src/training
     ```
-3. To train the models you need to set up the [configuration file](src/config.json):
+1. Create an `.env` file containing the [ClearML](https://app.clear.ml) API keys.
+    ```bash
+    #cd src/training
+    touch .env
+    ```
+    Put into the `.env` file the ClearML KEYS:
+    ```
+    CLEARML_WEB_HOST=https://app.clear.ml/
+    CLEARML_API_HOST=https://api.clear.ml
+    CLEARML_FILES_HOST=https://files.clear.ml
+    CLEARML_API_ACCESS_KEY=<API_KEY>
+    CLEARML_API_SECRET_KEY=<API_KEY>
+    ```
+2. Create a directory `yolov8`.
+    ```bash
+    #cd src/training
+    mkdir yolov8
+    ```
+3. Download the dataset from [roboflow](https://universe.roboflow.com/cardspace/hole_fold).
+    ```bash
+    #cd src/training
+    curl -L <url_roboflow> > roboflow.zip
+    ```
+    N.B. The `curl` command cannot be executed in the `docker` container, you need to execute it from the outside.
+4. Extract the dataset into `dataset_det`.
+    ```bash
+    #cd src/training
+    unzip roboflow.zip -d dataset_det; rm roboflow.zip
+    ```
+    N.B. Execute those commands from outside the `docker` container.
+5. ~~If you need to perform classification or segmentation, run the scripts to convert the detection dataset into classification and segmentation.~~
+    ```bash
+    #cd src/training
+    #cd ../../dataset
+    #python3 det2cls.py
+    #python3 det2seg.py
+    ```
+6. To train the models you need to set up the [configuration file](src/training/config.json) (in `src/training`).
     ```json
     {
         "dim": "n",
@@ -74,25 +110,31 @@ If you want to train the models, follow the steps below:
     - "dim": represents the dimension of the model
     - "devide": represents the GPU on which running the training
     - "train_id": serves for tracing the log on ClearML. Remember to use an incremental number starting from 1 for each YOLOv8 task. It will be useful for tracking the `best.pt` model stored in the `training` folder of `yolov8`.
-4. Run the following script for each train
+7. Run the following script.
     ```python
-    cd src/training
+    #cd src/training
     python3 yolov8_det.py   # YOLOv8 detection model
-    python3 yolov8_cls.py   # YOLOv8 classification model
-    python3 yolov8_seg.py   # YOLOv8 segmentation model
+    #python3 yolov8_cls.py   # YOLOv8 classification model
+    #python3 yolov8_seg.py   # YOLOv8 segmentation model
     ```
 
 ## Validation
 1. Download the validation dataset from [roboflow](https://universe.roboflow.com/cardspace/cardboard_testset_).
+    ```
+    curl -L <url_roboflow> > roboflow.zip
+    ```
 2. Extract the dataset into `dataset_det_val`
+    ```
+    unzip roboflow.zip -d dataset_det_val; rm roboflow.zip
+    ```
 2. Use the scripts to convert the detection dataset into classification and segmentation
 4. Download the `clearml.csv` file from the tool to download the training info
 3. Run the following script to validate the various models
     ```python
-    cd src/validation
+    #cd src/validation
     python3 yolov8_det_valid.py   # YOLOv8 detection model validation
-    python3 yolov8_cls_valid.py   # YOLOv8 classification model validation
-    python3 yolov8_seg_valid.py   # YOLOv8 segmentation model validation
+    #python3 yolov8_cls_valid.py   # YOLOv8 classification model validation
+    #python3 yolov8_seg_valid.py   # YOLOv8 segmentation model validation
     ```
 
 ## License

@@ -8,7 +8,6 @@ dotenv.load_dotenv()
 config = json.load(open('config.json'))
 models = [config['dim']]
 device_gpu = config['device']
-datasets = [config['dataset']]
 idx = config['train_id']
 
 cwd = os.getcwd()
