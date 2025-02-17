@@ -96,10 +96,11 @@ If you want to train the models, follow the steps below:
     CLEARML_API_ACCESS_KEY=<API_KEY>
     CLEARML_API_SECRET_KEY=<API_KEY>
     ```
-2. Create a directory `yolov8`.
+2. Create directories `yolov8` and `yolov11`.
     ```bash
     #cd src/training
     mkdir yolov8
+    mkdir yolov11
     ```
 3. Download the dataset from [roboflow](https://universe.roboflow.com/cardspace/hole_fold).
     ```bash
@@ -133,12 +134,13 @@ If you want to train the models, follow the steps below:
     - "dim": represents the dimension of the model
     - "devide": represents the GPU on which running the training
     - "train_id": serves for tracing the log on ClearML. Remember to use an incremental number starting from 1 for each YOLOv8 task. It will be useful for tracking the `best.pt` model stored in the `training` folder of `yolov8`.
-7. Run the following script.
+7. Run the following scripts.
     ```python
     #cd src/training
-    python3 yolov8_det.py   # YOLOv8 detection model
+    python3 yolov8_det.py    # YOLOv8 detection model
     #python3 yolov8_cls.py   # YOLOv8 classification model
     #python3 yolov8_seg.py   # YOLOv8 segmentation model
+    python3 yolov11_det.py   # YOLOv11 detection model
     ```
 
 ## Validation
