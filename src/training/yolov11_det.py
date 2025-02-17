@@ -27,9 +27,9 @@ for dataset in datasets:
         else: run_res = f"train{idx}"
         idx+=1
 
-        os.chdir(f'{cwd}/yolov8')
-        task = Task.init(project_name='detection', task_name=f"{dataset} - {dim} - {run_res} - dgx", tags=[dim, dataset, 'yolov8'])
-        model = YOLO(f'yolov8{dim}.pt')
+        os.chdir(f'{cwd}/yolov11')
+        task = Task.init(project_name='detection', task_name=f"{dataset} - {dim} - {run_res} - dgx", tags=[dim, dataset, 'yolov11'])
+        model = YOLO(f'yolo11{dim}.pt')
         model.train(data=f"{cwd}/{dataset}/data.yaml", epochs=500, batch=batches[dim], imgsz=640, patience=30, optimizer='SGD', device=device_gpu)
         task.close()
  
