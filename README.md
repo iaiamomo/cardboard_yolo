@@ -45,7 +45,7 @@ Training execution traces are available in [res](res) folder. The structure of t
     ```
 2. Launch the container in detach mode with GPU acces. Be sure to have installed the [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html).
     ```bash
-    docker run -d -v .:/home/default/ --gpus=all -it rotalaser-gpu bash
+    docker run -d -v .:/home/default/ --gpus=all --shm-size 10G -it rotalaser-gpu bash
     ```
 3. Open a terminal inside the created container (check the `<container_id>` with `docker ps`).
     ```bash
@@ -64,7 +64,7 @@ Training execution traces are available in [res](res) folder. The structure of t
     ```
 2. Launch the container in detach mode with GPU acces. Be sure to have installed the [NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html).
     ```bash
-    podman run -d -v .:/home/default/ --device nvidia.com/gpu=all -it rotalaser-gpu bash
+    podman run -d -v .:/home/default/ --device nvidia.com/gpu=all --shm-size 10G -it rotalaser-gpu bash
     ```
 3. Open a terminal inside the created container (check the `<container_id>` with `podman ps`).
     ```bash
