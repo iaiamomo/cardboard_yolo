@@ -107,21 +107,22 @@ If you want to train the models, follow the steps below:
     #cd src/training
     curl -L <url_roboflow> > roboflow.zip
     ```
-    N.B. The `curl` command cannot be executed in the `docker` container, you need to execute it from the outside.
-4. Extract the dataset into `dataset_det`.
+    N.B. The `curl` command cannot be executed in the `docker` container; you need to execute it from the outside. \
+    N.B. Download txt annotation format for yolov8 and yolov11.
+5. Extract the dataset into `dataset_det`.
     ```bash
     #cd src/training
     unzip roboflow.zip -d dataset_det; rm roboflow.zip
     ```
     N.B. Execute those commands from outside the `docker` container.
-5. ~~If you need to perform classification or segmentation, run the scripts to convert the detection dataset into classification and segmentation.~~
+6. ~~If you need to perform classification or segmentation, run the scripts to convert the detection dataset into classification and segmentation.~~
     ```bash
     #cd src/training
     #cd ../../dataset
     #python3 det2cls.py
     #python3 det2seg.py
     ```
-6. To train the models you need to set up the [configuration file](src/training/config.json) (in `src/training`).
+7. To train the models you need to set up the [configuration file](src/training/config.json) (in `src/training`).
     ```json
     {
         "dim": "n",
@@ -134,7 +135,7 @@ If you want to train the models, follow the steps below:
     - "dim": represents the dimension of the model
     - "devide": represents the GPU on which running the training
     - "train_id": serves for tracing the log on ClearML. Remember to use an incremental number starting from 1 for each YOLOv8 task. It will be useful for tracking the `best.pt` model stored in the `training` folder of `yolov8`.
-7. Run the following scripts.
+8. Run the following scripts.
     ```python
     #cd src/training
     python3 yolov8_det.py    # YOLOv8 detection model
